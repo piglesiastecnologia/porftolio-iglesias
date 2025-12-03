@@ -1,66 +1,112 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import { Container, Box } from "@mui/material";
+
+import { Header } from "@/components/layout/header";
+import {
+  profile,
+  techStack,
+  projects,
+  about,
+  languagesInfo,
+  contact,
+} from "@/data/portfolio";
+import { HeroSection } from "@/components/portfolio/HeroSection";
+import { AboutSection } from "@/components/portfolio/AboutSection"; // você cria igual ao HeroSection
+import { StackListSection } from "@/components/portfolio/StackListSection";
+import { ProjectsSection } from "@/components/portfolio/ProjectsSection";
+import { LanguagesSection } from "@/components/portfolio/LanguagesSection";
+// import { IntegrationsSection } from "@/components/portfolio/IntegrationsSection";
+import { ContactSection } from "@/components/portfolio/ContactSection";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+
+export default function HomePage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <Box
+      sx={{
+        minHeight: "100vh",
+        // Fundo suave: adapta pra light/dark
+        background: (t) =>
+          t.palette.mode === "light"
+            ? "radial-gradient(circle at top, #eef2ff 0, #f9fafb 40%, #ffffff 80%)"
+            : "radial-gradient(circle at top, #020617 0, #020617 40%, #020617 80%)",
+        color: "text.primary",
+      }}>
+      <Header />
+
+      <Container
+        maxWidth='lg'
+        sx={{
+          py: { xs: 4, md: 6 },
+          // layout mais “respirado”
+          display: "flex",
+          flexDirection: "column",
+          gap: { xs: 4, md: 6 },
+        }}>
+        {/* HERO */}
+        <HeroSection profile={profile} />
+
+
+        {/* SOBRE */}
+        <AboutSection
+          title={about.title}
+          paragraphs={about.paragraphs}
+          highlights={profile.highlights}
         />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        {/* SKILLS */}
+        <StackListSection items={techStack} />
+
+        {/* PROJETOS */}
+        <ProjectsSection projects={projects} />
+
+        {/* IDIOMAS & DISPONIBILIDADE */}
+        <LanguagesSection
+          title={languagesInfo.title}
+          languagesTitle={languagesInfo.languagesTitle}
+          availabilityTitle={languagesInfo.availabilityTitle}
+          languages={languagesInfo.languages}
+          availability={languagesInfo.availability}
+        />
+
+        {/* INTEGRAÇÕES */}
+        {/* <Box id='integracoes' sx={{ py: 4 }}>
+        <Typography variant='h5' fontWeight={700} gutterBottom>
+          Integrações & APIs
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Card variant='outlined'>
+              <CardContent>
+                <Typography fontWeight={700} gutterBottom>
+                  RESTful
+                </Typography>
+                <Typography variant='body2'>
+                  Autenticação JWT/OAuth, rate limit, retry/backoff; webhooks
+                  idempotentes e reconciliação; pagamentos: Mercado Pago Bricks.
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Card variant='outlined'>
+              <CardContent>
+                <Typography fontWeight={700} gutterBottom>
+                  SOAP / XML
+                </Typography>
+                <Typography variant='body2'>
+                  Leitura/geração de XML (ONIX 3.0), saneamento/encoding,
+                  validação via XSD, integrações legadas (PHP/Cake, Python).
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Box> */}
+
+        {/* CONTATO */}
+        <ContactSection profile={profile} contact={contact} />
+      </Container>
+    </Box>
   );
 }
