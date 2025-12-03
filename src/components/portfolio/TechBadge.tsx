@@ -1,3 +1,5 @@
+"use client";
+
 // src/components/portfolio/TechBadge.tsx
 import { Paper, Typography } from "@mui/material";
 

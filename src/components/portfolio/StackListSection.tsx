@@ -1,3 +1,5 @@
+"use client";
+
 // src/components/portfolio/StackListSection.tsx
 import { Box, Typography, Stack } from "@mui/material";
 import { TechBadge } from "./TechBadge";

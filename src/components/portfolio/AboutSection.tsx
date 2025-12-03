@@ -1,13 +1,12 @@
+"use client";
+
 // src/components/portfolio/AboutSection.tsx
 import {
   Box,
   Typography,
   Card,
-  CardContent,
-  Grid,
-  Chip,
+  CardContent
 } from "@mui/material";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 type AboutSectionProps = {
   title: string;

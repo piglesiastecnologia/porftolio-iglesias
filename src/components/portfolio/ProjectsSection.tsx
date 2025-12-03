@@ -1,3 +1,5 @@
+"use client";
+
 // src/components/portfolio/ProjectsSection.tsx
 import { Box, Typography, Grid } from "@mui/material";
 import type { Project } from "@/data/portfolio";
