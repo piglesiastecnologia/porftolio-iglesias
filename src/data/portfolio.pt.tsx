@@ -80,8 +80,8 @@ export const languagesInfo = {
   languages: [
     "Português (C2 – Nativo)",
     "Inglês (C1 – Avançado)",
-    "Francês (A2 - ILSC Montréal 2025)",
     "Espanhol (B2 – Intermediário Avançado)",
+    "French (B1 - Intermediário)",
   ],
   availability: [
     "Remoto",
@@ -134,7 +134,7 @@ export const projects: Project[] = [
     ] as TechStackItem[],
     links: [
       { label: "Site", href: "https://kaijucomics.com.br/" },
-      { label: "Case", href: "/case/kaiju" },
+      // { label: "Case", href: "/case/kaiju" },
     ],
     impact: [
       "Arquitetura modular (products, orders, payments, shipping, promotions)",

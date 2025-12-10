@@ -66,9 +66,9 @@ export const languagesInfo: PortfolioData["languagesInfo"] = {
   availabilityTitle: "Availability",
   languages: [
     "Portuguese (C2 – Native)",
-    "English (C1 – Advanced · daily work language)",
-    "French (A2 - ILSC Montréal 2025)",
+    "English (C1 – Advanced)",
     "Spanish (B2 – Upper Intermediate)",
+    "French (B1 - Internmediate)",
   ],
   availability: [
     "Remote work",
@@ -110,7 +110,7 @@ export const projects: Project[] = [
     ] as TechStackItem[],
     links: [
       { label: "Website", href: "https://kaijucomics.com.br/" },
-      { label: "Case study", href: "/case/kaiju" },
+      // { label: "Case study", href: "/case/kaiju" },
     ],
     impact: [
       "Designed a modular architecture (products, orders, payments, shipping, promotions) to support future growth.",
