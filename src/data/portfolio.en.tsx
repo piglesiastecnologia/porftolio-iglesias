@@ -67,7 +67,7 @@ export const languagesInfo: PortfolioData["languagesInfo"] = {
   languages: [
     "Portuguese (C2 – Native)",
     "English (C1 – Advanced · daily work language)",
-    "French (B1 – Intermediate • ILSC Montréal 2025)",
+    "French (A2 - ILSC Montréal 2025)",
     "Spanish (B2 – Upper Intermediate)",
   ],
   availability: [

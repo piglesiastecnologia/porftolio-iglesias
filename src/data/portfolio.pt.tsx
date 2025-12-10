@@ -80,7 +80,7 @@ export const languagesInfo = {
   languages: [
     "Português (C2 – Nativo)",
     "Inglês (C1 – Avançado)",
-    "Francês (B1 – Intermediário • ILSC Montréal 2025)",
+    "Francês (A2 - ILSC Montréal 2025)",
     "Espanhol (B2 – Intermediário Avançado)",
   ],
   availability: [
