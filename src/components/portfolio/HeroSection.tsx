@@ -14,13 +14,28 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PlaceIcon from "@mui/icons-material/Place";
 
-import type { Profile } from "@/data/portfolio";
+import type { Profile } from "@/data/portfolio.pt";
+import type { Locale } from "@/i18n/config";
 
 type HeroSectionProps = {
   profile: Profile;
+  locale: Locale;
 };
 
-export function HeroSection({ profile }: HeroSectionProps) {
+export function HeroSection({ profile, locale }: HeroSectionProps) {
+  const labels =
+    locale === "en"
+      ? {
+          overline: "Portfolio",
+          relocationChip: "Open to relocation · Remote",
+          email: "Email",
+        }
+      : {
+          overline: "Portfólio",
+          relocationChip: "Aberta a relocation · Remoto",
+          email: "E-mail",
+        };
+
   return (
     <Box
       sx={{
@@ -64,7 +79,7 @@ export function HeroSection({ profile }: HeroSectionProps) {
           sx={{ letterSpacing: 3, textTransform: "uppercase" }}
           color="primary"
         >
-          Portfolio
+          {labels.overline}
         </Typography>
 
         <Typography variant="h3" fontWeight={800} sx={{ mt: 0.5, mb: 0.5 }}>
@@ -88,12 +103,13 @@ export function HeroSection({ profile }: HeroSectionProps) {
           </Stack>
           <Chip
             size="small"
-            label="Open to relocation · Remote"
+            label={labels.relocationChip}
             color="primary"
             variant="outlined"
           />
         </Stack>
 
+        {/* Se quiser voltar com os highlights, já tá pronto pra i18n também */}
         {/* <Stack direction="row" spacing={1} mb={2} flexWrap="wrap" useFlexGap>
           {profile.highlights.map((h) => (
             <Chip
@@ -114,6 +130,7 @@ export function HeroSection({ profile }: HeroSectionProps) {
             component={MLink}
             href={profile.linkedin}
             target="_blank"
+            rel="noopener noreferrer"
           >
             LinkedIn
           </Button>
@@ -124,6 +141,7 @@ export function HeroSection({ profile }: HeroSectionProps) {
             component={MLink}
             href={profile.github}
             target="_blank"
+            rel="noopener noreferrer"
           >
             GitHub
           </Button>
@@ -133,7 +151,7 @@ export function HeroSection({ profile }: HeroSectionProps) {
             component={MLink}
             href={`mailto:${profile.email}`}
           >
-            E-mail
+            {labels.email}
           </Button>
         </Stack>
       </Box>

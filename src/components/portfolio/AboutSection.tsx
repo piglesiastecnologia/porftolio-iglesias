@@ -1,17 +1,12 @@
 "use client";
 
 // src/components/portfolio/AboutSection.tsx
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent
-} from "@mui/material";
+import { Box, Typography, Card, CardContent } from "@mui/material";
 
 type AboutSectionProps = {
   title: string;
-  paragraphs: readonly string[]; 
-  highlights: readonly string[]; 
+  paragraphs: readonly string[];
+  highlights: readonly string[];
 };
 
 export function AboutSection({
@@ -20,16 +15,14 @@ export function AboutSection({
   highlights,
 }: AboutSectionProps) {
   return (
-    <Box id="sobre" sx={{ py: 4 }}>
-      <Typography variant="h5" fontWeight={700} gutterBottom>
+    <Box id='sobre' sx={{ py: 4 }}>
+      <Typography variant='h5' fontWeight={700} gutterBottom>
         {title}
       </Typography>
-      <Card variant="outlined">
+      <Card variant='outlined'>
         <CardContent>
-          {paragraphs.map((p) => (
-            <Typography key={p} paragraph sx={{ lineHeight: 1.7 }}>
-              {p}
-            </Typography>
+          {paragraphs.map((p, i) => (
+            <Typography key={i}>{p}</Typography>
           ))}
 
           {/* <Typography

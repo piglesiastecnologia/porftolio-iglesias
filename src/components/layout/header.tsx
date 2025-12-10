@@ -39,7 +39,7 @@ function scrollToSection(id: string) {
 }
 
 export function Header({ locale }: HeaderProps) {
-   const pathname = usePathname();
+  const pathname = usePathname();
 
   // Remove prefixo /pt ou /en da URL atual
   const cleanPath = pathname.replace(/^\/(pt|en)/, "") || "";

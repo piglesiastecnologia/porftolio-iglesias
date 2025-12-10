@@ -41,22 +41,24 @@ export default async function HomePage({ params }: PageProps) {
           flexDirection: "column",
           gap: { xs: 4, md: 6 },
         }}>
-        <HeroSection profile={profile} />
+        <HeroSection profile={profile} locale={locale} />
         <AboutSection
           title={about.title}
           paragraphs={about.paragraphs}
           highlights={profile.highlights}
         />
-        <StackListSection items={techStack} />
-        <ProjectsSection projects={projects} />
+        <StackListSection items={techStack} locale={locale} />
+        <ProjectsSection projects={projects} locale={locale} />
         <LanguagesSection
           title={languagesInfo.title}
           languagesTitle={languagesInfo.languagesTitle}
           availabilityTitle={languagesInfo.availabilityTitle}
           languages={languagesInfo.languages}
           availability={languagesInfo.availability}
+          locale={locale}
         />
-        <ContactSection profile={profile} contact={contact} />
+
+        <ContactSection profile={profile} contact={contact} locale={locale} />
       </Container>
     </Box>
   );

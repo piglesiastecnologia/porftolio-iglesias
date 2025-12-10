@@ -1,6 +1,6 @@
-// src/components/portfolio/LanguagesSection.tsx
 "use client";
 
+// src/components/portfolio/LanguagesSection.tsx
 import {
   Box,
   Card,
@@ -15,12 +15,15 @@ import PublicIcon from "@mui/icons-material/Public";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 
+import type { Locale } from "@/i18n/config";
+
 type LanguagesSectionProps = {
   title: string;
   languagesTitle: string;
   availabilityTitle: string;
   languages: string[];
   availability: string[];
+  locale: Locale;
 };
 
 export function LanguagesSection({
@@ -29,9 +32,31 @@ export function LanguagesSection({
   availabilityTitle,
   languages,
   availability,
+  locale,
 }: LanguagesSectionProps) {
+  const copy =
+    locale === "en"
+      ? {
+          id: "languages",
+          intro:
+            "Languages I use in my daily work and how I collaborate with distributed teams, global clients and multicultural contexts.",
+          languagesCaption:
+            "Levels based on real use in projects, studies and travel.",
+          availabilityCaption:
+            "How I can work with global teams and long-term projects.",
+        }
+      : {
+          id: "idiomas",
+          intro:
+            "Idiomas que uso no dia a dia e como me conecto com times distribuídos, clientes globais e contextos multiculturais.",
+          languagesCaption:
+            "Níveis alinhados com uso real em projetos, estudos e viagens.",
+          availabilityCaption:
+            "Como posso atuar em times globais e projetos de longo prazo.",
+        };
+
   return (
-    <Box id="idiomas" sx={{ py: 4 }}>
+    <Box id={copy.id} sx={{ py: 4 }}>
       <Typography variant="h5" fontWeight={700} gutterBottom>
         {title}
       </Typography>
@@ -43,8 +68,7 @@ export function LanguagesSection({
           color: theme.palette.text.secondary,
         })}
       >
-        Idiomas que uso no dia a dia e como me conecto com times distribuídos,
-        clientes globais e contextos multiculturais.
+        {copy.intro}
       </Typography>
 
       <Card
@@ -96,7 +120,7 @@ export function LanguagesSection({
                         color: theme.palette.text.secondary,
                       })}
                     >
-                      Níveis alinhados com uso real em projetos e viagens.
+                      {copy.languagesCaption}
                     </Typography>
                   </div>
                 </Stack>
@@ -155,19 +179,23 @@ export function LanguagesSection({
                         color: theme.palette.text.secondary,
                       })}
                     >
-                      Como posso atuar em times globais e projetos long term.
+                      {copy.availabilityCaption}
                     </Typography>
                   </div>
                 </Stack>
 
                 <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
                   {availability.map((item) => {
-                    const icon =
-                      item.toLowerCase().includes("fuso") ? (
-                        <AccessTimeFilledIcon fontSize="inherit" />
-                      ) : item.toLowerCase().includes("relocation") ? (
-                        <FlightTakeoffIcon fontSize="inherit" />
-                      ) : undefined;
+                    const lower = item.toLowerCase();
+                    const hasTimeZone =
+                      lower.includes("fuso") || lower.includes("time zone");
+                    const hasRelocation = lower.includes("relocation");
+
+                    const icon = hasTimeZone ? (
+                      <AccessTimeFilledIcon fontSize="inherit" />
+                    ) : hasRelocation ? (
+                      <FlightTakeoffIcon fontSize="inherit" />
+                    ) : undefined;
 
                     return (
                       <Chip
