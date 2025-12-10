@@ -12,7 +12,7 @@ import {
   Link as MLink,
 } from "@mui/material";
 import LaunchIcon from "@mui/icons-material/Launch";
-import type { Project } from "@/data/portfolio";
+import type { Project } from "@/data/portfolio.pt";
 
 type ProjectCardProps = {
   project: Project;
@@ -248,6 +248,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               component={MLink}
               href={l.href}
               target="_blank"
+              rel="noopener noreferrer"
               endIcon={<LaunchIcon />}
               sx={{
                 textTransform: "none",
