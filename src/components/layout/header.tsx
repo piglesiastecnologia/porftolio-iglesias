@@ -1,15 +1,32 @@
 "use client";
 
-import { AppBar, Toolbar, Typography, Box, Stack, Button } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  Stack,
+  Button,
+  ToggleButtonGroup,
+  ToggleButton,
+} from "@mui/material";
+import TranslateRoundedIcon from "@mui/icons-material/TranslateRounded";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import type { Locale } from "@/i18n/config";
+
+type HeaderProps = {
+  locale: Locale;
+};
 
 const sections = [
   { id: "sobre", label: "Sobre" },
   { id: "skills", label: "Stack" },
   { id: "projetos", label: "Projetos" },
   { id: "idiomas", label: "Idiomas" },
-//   { id: "integracoes", label: "Integrações" },
+  //   { id: "integracoes", label: "Integrações" },
   { id: "contato", label: "Contato" },
 ];
 
@@ -21,11 +38,16 @@ function scrollToSection(id: string) {
   }
 }
 
-export function Header() {
+export function Header({ locale }: HeaderProps) {
+   const pathname = usePathname();
+
+  // Remove prefixo /pt ou /en da URL atual
+  const cleanPath = pathname.replace(/^\/(pt|en)/, "") || "";
+
   return (
     <AppBar
-      position="sticky"
-      color="transparent"
+      position='sticky'
+      color='transparent'
       elevation={0}
       sx={{
         backdropFilter: "blur(12px)",
@@ -33,51 +55,88 @@ export function Header() {
           t.palette.mode === "light"
             ? "1px solid rgba(0,0,0,0.06)"
             : "1px solid rgba(255,255,255,0.08)",
-      }}
-    >
+      }}>
       <Toolbar
         sx={{
           maxWidth: "lg",
           mx: "auto",
           width: "100%",
           gap: 2,
-        }}
-      >
+        }}>
         {/* Logo / Nome */}
-        <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center", gap: 1 }}>
+        <Box
+          sx={{ flexGrow: 1, display: "flex", alignItems: "center", gap: 1 }}>
           <Typography
-            variant="subtitle1"
+            variant='subtitle1'
             fontWeight={700}
             component={Link}
-            href="#"
+            href='#'
             sx={{
               textDecoration: "none",
               color: "inherit",
-            }}
-          >
+            }}>
             Pamela Iglesias
           </Typography>
         </Box>
 
         {/* Navegação desktop */}
         <Stack
-          direction="row"
+          direction='row'
           spacing={1}
-          sx={{ display: { xs: "none", md: "flex" } }}
-        >
+          sx={{ display: { xs: "none", md: "flex" } }}>
           {sections.map((section) => (
             <Button
               key={section.id}
-              size="small"
-              color="inherit"
-              onClick={() => scrollToSection(section.id)}
-            >
+              size='small'
+              color='inherit'
+              onClick={() => scrollToSection(section.id)}>
               {section.label}
             </Button>
           ))}
         </Stack>
 
         {/* Theme toggle */}
+        {/* Language Switcher */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <TranslateRoundedIcon fontSize='small' sx={{ opacity: 0.7 }} />
+
+          <ToggleButtonGroup
+            exclusive
+            value={locale}
+            size='small'
+            sx={{
+              "& .MuiToggleButton-root": {
+                textTransform: "none",
+                fontSize: "0.75rem",
+                px: 1.5,
+                py: 0.3,
+                borderRadius: "8px",
+                transition: "0.2s",
+              },
+            }}>
+            <ToggleButton
+              value='en'
+              component={Link}
+              href={`/en${cleanPath}`}
+              sx={{
+                opacity: locale === "en" ? 1 : 0.4,
+                fontWeight: locale === "en" ? 700 : 400,
+              }}>
+              EN
+            </ToggleButton>
+
+            <ToggleButton
+              value='pt'
+              component={Link}
+              href={`/pt${cleanPath}`}
+              sx={{
+                opacity: locale === "pt" ? 1 : 0.4,
+                fontWeight: locale === "pt" ? 700 : 400,
+              }}>
+              PT-BR
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
         <ThemeToggle />
       </Toolbar>
     </AppBar>

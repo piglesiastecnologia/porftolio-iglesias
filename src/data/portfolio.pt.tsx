@@ -1,4 +1,4 @@
-// src/data/portfolio.ts
+// src/data/portfolio.pt.ts
 import {
   SiReact,
   SiDjango,
@@ -22,7 +22,18 @@ import PegaIcon from "@/components/icons/PegaIcon";
 
 export type TechStackItem = { name: string; icon?: React.ReactNode };
 
-export const profile = {
+export type Profile = {
+  name: string;
+  email: string;
+  github: string;
+  linkedin: string;
+  photo: string;
+  location: string;
+  headline: string;
+  highlights: string[];
+};
+
+export const profile: Profile = {
   name: "Pamela Fabia Iglesias",
   email: "pamela@iglesiastecnologia.com.br",
   github: "https://github.com/piglesiastecnologia",
@@ -35,21 +46,16 @@ export const profile = {
     "Python (Django)",
     "Pega 23/24/25 (Constellation UI)",
   ],
-} as const;
+};
 
-export type Profile = typeof profile;
 
-// 🔹 Texto da seção "Sobre"
+// 🔹 Sobre – PT
 export const about = {
   title: "Sobre",
   paragraphs: [
     "Sou uma profissional com trajetória sólida em Tecnologia da Informação. Iniciei minha carreira em suporte técnico, onde desenvolvi um olhar analítico e orientado à resolução de problemas. Com o tempo, aprofundei meus estudos em Desenvolvimento de Sistemas Web e, desde então, venho atuando em projetos que unem engenharia de software e arquitetura de soluções, sempre com foco em eficiência, automação e experiência do usuário.",
     "Acredito que tecnologia é sobre melhorar a vida das pessoas e é isso que me motiva a projetar soluções bem pensadas e funcionais.",
     "Hoje atuo com React/TypeScript, Python/Django, Pega (Constellation UI) e integrações complexas (pagamentos, ONIX, APIs REST/SOAP).",
-  ],
-  paragraph_en: [
-    "I’ve grown my career working closely with global teams, building systems that solve real problems at scale. Collaborating across time zones taught me to communicate clearly, handle complexity with intention, and maintain high engineering standards while moving fast.",
-    "I care about well-structured architecture, maintainable code, and software that brings real value to the people using it. Technology became my craft — something I build with responsibility, clarity, and a strong sense of ownership.",
   ],
 };
 
@@ -66,7 +72,7 @@ export const techStack = [
   { label: "Material UI", icon: <SiMui size={16} /> },
 ];
 
-// 🔹 Idiomas & disponibilidade
+// 🔹 Idiomas & disponibilidade – PT
 export const languagesInfo = {
   title: "Idiomas & Disponibilidade",
   languagesTitle: "Idiomas",
@@ -84,7 +90,7 @@ export const languagesInfo = {
   ],
 };
 
-// 🔹 Integrações & APIs
+// 🔹 Integrações & APIs – PT
 export const integrations = {
   title: "Integrações & APIs",
   rest: {
@@ -99,7 +105,7 @@ export const integrations = {
   },
 };
 
-// 🔹 Projetos em destaque
+// 🔹 Projetos em destaque – PT
 export type Project = {
   title: string;
   period: string;
@@ -136,8 +142,8 @@ export const projects: Project[] = [
       "Cálculo consistente de totais e idempotência no backend",
     ],
     category: "Case · E-commerce / Retail",
-    logo: "/logos/kaiju.png", // 🔹 cria depois em public/logos
-    accentColor: "#ff0000", // 
+    logo: "/logos/kaiju.png",
+    accentColor: "#ff0000",
   },
   {
     title: "Pega Constellation",
@@ -192,9 +198,43 @@ export const projects: Project[] = [
   },
 ];
 
-// 🔹 Contato
+// 🔹 Contato – PT
 export const contact = {
   title: "Contato",
   description:
     "Aberta a oportunidades remotas e relocation. Vamos conversar sobre arquitetura, e-commerce ou modernização de sistemas?",
 };
+
+// // agregado pra facilitar o loader
+// export const portfolioDataPt = {
+//   profile,
+//   about,
+//   techStack,
+//   languagesInfo,
+//   integrations,
+//   projects,
+//   contact,
+// };
+
+// export type PortfolioData = typeof portfolioDataPt;
+
+export type PortfolioData = {
+  profile: Profile;
+  about: typeof about;
+  techStack: typeof techStack;
+  languagesInfo: typeof languagesInfo;
+  integrations: typeof integrations;
+  projects: Project[];
+  contact: typeof contact;
+};
+
+export const portfolioDataPt: PortfolioData = {
+  profile,
+  about,
+  techStack,
+  languagesInfo,
+  integrations,
+  projects,
+  contact,
+};
+
