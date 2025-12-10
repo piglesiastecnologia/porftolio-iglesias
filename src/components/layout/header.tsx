@@ -10,21 +10,16 @@ import {
   Link as MLink,
   ToggleButtonGroup,
   ToggleButton,
+  Box,
 } from "@mui/material";
 import TranslateIcon from "@mui/icons-material/Translate";
 import { usePathname, useRouter } from "next/navigation";
-
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import type { Locale } from "@/i18n/config";
 
-type HeaderProps = {
-  locale: Locale;
-};
+type HeaderProps = { locale: Locale };
 
-const navByLocale: Record<
-  Locale,
-  { label: string; href: string }[]
-> = {
+const navByLocale: Record<Locale, { label: string; href: string }[]> = {
   en: [
     { label: "About", href: "#about" },
     { label: "Stack", href: "#skills" },
@@ -44,7 +39,6 @@ const navByLocale: Record<
 export function Header({ locale }: HeaderProps) {
   const router = useRouter();
   const pathname = usePathname();
-
   const navItems = navByLocale[locale];
 
   const handleLocaleChange = (
@@ -52,11 +46,7 @@ export function Header({ locale }: HeaderProps) {
     nextLocale: Locale | null
   ) => {
     if (!nextLocale || nextLocale === locale) return;
-
-    // tira o prefixo /en ou /pt da URL atual
-    const cleanPath =
-      pathname?.replace(/^\/(en|pt)(\/?)/, "/") || "/";
-
+    const cleanPath = pathname?.replace(/^\/(en|pt)(\/?)/, "/") || "/";
     router.push(`/${nextLocale}${cleanPath === "/" ? "" : cleanPath}`);
   };
 
@@ -64,18 +54,24 @@ export function Header({ locale }: HeaderProps) {
     <AppBar
       position="sticky"
       elevation={0}
-      color="transparent"
       sx={(theme) => ({
-        borderBottom: `1px solid ${
-          theme.palette.mode === "light"
-            ? "rgba(148,163,184,0.35)"
-            : "rgba(15,23,42,0.9)"
-        }`,
-        backdropFilter: "blur(12px)",
-        backgroundColor:
-          theme.palette.mode === "light"
-            ? "rgba(248,250,252,0.9)"
-            : "rgba(2,6,23,0.92)",
+        top: 0,
+        zIndex: theme.zIndex.appBar,
+        background: "transparent",
+        // 🔹 vidro de verdade
+        backdropFilter: "blur(24px) saturate(170%)",
+        WebkitBackdropFilter: "blur(24px) saturate(170%)",
+        // faixa de vidro com gradiente e transparência
+        backgroundImage:
+          theme.palette.mode === "dark"
+            ? "linear-gradient(to bottom, rgba(15,23,42,0.65), rgba(15,23,42,0.35), rgba(15,23,42,0.08))"
+            : "linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(248,250,252,0.7), rgba(248,250,252,0.12))",
+        // tira bordona marcada
+        borderBottom: "1px solid rgba(148,163,184,0.25)",
+        boxShadow:
+          theme.palette.mode === "dark"
+            ? "0 18px 40px rgba(0,0,0,0.6)"
+            : "0 18px 40px rgba(15,23,42,0.18)",
       })}
     >
       <Toolbar
@@ -84,10 +80,10 @@ export function Header({ locale }: HeaderProps) {
           mx: "auto",
           width: "100%",
           minHeight: { xs: 56, md: 64 },
-          px: { xs: 2, md: 3 },
+          px: { xs: 1.5, md: 3 },
           display: "flex",
           justifyContent: "space-between",
-          gap: 2,
+          alignItems: "center",
         }}
       >
         {/* Brand */}
@@ -96,33 +92,24 @@ export function Header({ locale }: HeaderProps) {
           href={`/${locale}`}
           variant="subtitle1"
           fontWeight={600}
-          underline="none"
           sx={{
             textDecoration: "none",
-            color: "inherit",
+            color: "rgba(255,255,255,0.96)",
+            letterSpacing: 0.4,
+            textShadow: "0 2px 6px rgba(0,0,0,0.35)",
             whiteSpace: "nowrap",
           }}
         >
           Pamela Iglesias
         </Typography>
 
-        {/* NAV + LANG + THEME */}
-        <Stack
-          direction="row"
-          spacing={2}
-          alignItems="center"
-          sx={{
-            flex: 1,
-            justifyContent: "flex-end",
-          }}
-        >
-          {/* NAV LINKS */}
+        {/* Nav + controls */}
+        <Stack direction="row" spacing={2} alignItems="center">
+          {/* Nav links */}
           <Stack
             direction="row"
             spacing={2}
-            sx={{
-              display: { xs: "none", md: "flex" }, // some no mobile se quiser
-            }}
+            sx={{ display: { xs: "none", md: "flex" } }}
           >
             {navItems.map((item) => (
               <Button
@@ -130,9 +117,10 @@ export function Header({ locale }: HeaderProps) {
                 component={MLink}
                 href={item.href}
                 sx={{
-                  color: "text.primary",
-                  fontSize: "0.85rem",
+                  color: "rgba(255,255,255,0.9)",
+                  fontSize: "0.8rem",
                   letterSpacing: 0.6,
+                  textShadow: "0 2px 4px rgba(0,0,0,0.4)",
                 }}
               >
                 {item.label.toUpperCase()}
@@ -140,16 +128,32 @@ export function Header({ locale }: HeaderProps) {
             ))}
           </Stack>
 
-          {/* LANG TOGGLE + THEME */}
-          <Stack direction="row" spacing={1.5} alignItems="center">
-            <IconButton size="small" disableRipple sx={{ cursor: "default" }}>
+          {/* Idioma + tema */}
+          <Stack direction="row" spacing={1.2} alignItems="center">
+            <IconButton size="small" sx={{ color: "rgba(255,255,255,0.9)" }}>
               <TranslateIcon fontSize="small" />
             </IconButton>
+
             <ToggleButtonGroup
-              size="small"
               exclusive
+              size="small"
               value={locale}
               onChange={handleLocaleChange}
+              sx={{
+                "& .MuiToggleButton-root": {
+                  color: "rgba(255,255,255,0.85)",
+                  border: "none",
+                  px: 1.6,
+                  textTransform: "none",
+                  fontSize: "0.7rem",
+                  "&.Mui-selected": {
+                    background:
+                      "linear-gradient(135deg, rgba(191,219,254,0.35), rgba(129,140,248,0.55))",
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                  },
+                },
+              }}
             >
               <ToggleButton value="en">EN</ToggleButton>
               <ToggleButton value="pt">PT-BR</ToggleButton>
