@@ -4,141 +4,160 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Box,
   Stack,
   Button,
+  IconButton,
+  Link as MLink,
   ToggleButtonGroup,
   ToggleButton,
 } from "@mui/material";
-import TranslateRoundedIcon from "@mui/icons-material/TranslateRounded";
+import TranslateIcon from "@mui/icons-material/Translate";
+import { usePathname, useRouter } from "next/navigation";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import type { Locale } from "@/i18n/config";
 
 type HeaderProps = {
   locale: Locale;
 };
 
-const sections = [
-  { id: "sobre", label: "Sobre" },
-  { id: "skills", label: "Stack" },
-  { id: "projetos", label: "Projetos" },
-  { id: "idiomas", label: "Idiomas" },
-  //   { id: "integracoes", label: "Integrações" },
-  { id: "contato", label: "Contato" },
-];
-
-function scrollToSection(id: string) {
-  if (typeof window === "undefined") return;
-  const el = document.getElementById(id);
-  if (el) {
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-}
+const navByLocale: Record<
+  Locale,
+  { label: string; href: string }[]
+> = {
+  en: [
+    { label: "About", href: "#about" },
+    { label: "Stack", href: "#skills" },
+    { label: "Projects", href: "#projects" },
+    { label: "Languages", href: "#languages" },
+    { label: "Contact", href: "#contact" },
+  ],
+  pt: [
+    { label: "Sobre", href: "#sobre" },
+    { label: "Stack", href: "#skills" },
+    { label: "Projetos", href: "#projetos" },
+    { label: "Idiomas", href: "#idiomas" },
+    { label: "Contato", href: "#contato" },
+  ],
+};
 
 export function Header({ locale }: HeaderProps) {
+  const router = useRouter();
   const pathname = usePathname();
 
-  // Remove prefixo /pt ou /en da URL atual
-  const cleanPath = pathname.replace(/^\/(pt|en)/, "") || "";
+  const navItems = navByLocale[locale];
+
+  const handleLocaleChange = (
+    _event: React.MouseEvent<HTMLElement>,
+    nextLocale: Locale | null
+  ) => {
+    if (!nextLocale || nextLocale === locale) return;
+
+    // tira o prefixo /en ou /pt da URL atual
+    const cleanPath =
+      pathname?.replace(/^\/(en|pt)(\/?)/, "/") || "/";
+
+    router.push(`/${nextLocale}${cleanPath === "/" ? "" : cleanPath}`);
+  };
 
   return (
     <AppBar
-      position='sticky'
-      color='transparent'
+      position="sticky"
       elevation={0}
-      sx={{
+      color="transparent"
+      sx={(theme) => ({
+        borderBottom: `1px solid ${
+          theme.palette.mode === "light"
+            ? "rgba(148,163,184,0.35)"
+            : "rgba(15,23,42,0.9)"
+        }`,
         backdropFilter: "blur(12px)",
-        borderBottom: (t) =>
-          t.palette.mode === "light"
-            ? "1px solid rgba(0,0,0,0.06)"
-            : "1px solid rgba(255,255,255,0.08)",
-      }}>
+        backgroundColor:
+          theme.palette.mode === "light"
+            ? "rgba(248,250,252,0.9)"
+            : "rgba(2,6,23,0.92)",
+      })}
+    >
       <Toolbar
         sx={{
+          maxWidth: "1120px",
+          mx: "auto",
+          width: "100%",
+          minHeight: { xs: 56, md: 64 },
+          px: { xs: 2, md: 3 },
           display: "flex",
           justifyContent: "space-between",
-          px: { xs: 1.5, md: 2 },
-          minHeight: { xs: 56, md: 64 },
-        }}>
-        {/* Logo / Nome */}
-        <Box
-          sx={{ flexGrow: 1, display: "flex", alignItems: "center", gap: 1 }}>
-          <Typography
-            variant='subtitle1'
-            fontWeight={700}
-            component={Link}
-            href='#'
-            sx={{
-              textDecoration: "none",
-              color: "inherit",
-            }}>
-            Pamela Iglesias
-          </Typography>
-        </Box>
+          gap: 2,
+        }}
+      >
+        {/* Brand */}
+        <Typography
+          component={MLink}
+          href={`/${locale}`}
+          variant="subtitle1"
+          fontWeight={600}
+          underline="none"
+          sx={{
+            textDecoration: "none",
+            color: "inherit",
+            whiteSpace: "nowrap",
+          }}
+        >
+          Pamela Iglesias
+        </Typography>
 
-        {/* Navegação desktop */}
+        {/* NAV + LANG + THEME */}
         <Stack
-          direction='row'
-          spacing={1}
-          sx={{ display: { xs: "none", md: "flex" } }}>
-          {sections.map((section) => (
-            <Button
-              key={section.id}
-              size='small'
-              color='inherit'
-              onClick={() => scrollToSection(section.id)}>
-              {section.label}
-            </Button>
-          ))}
-        </Stack>
-
-        {/* Language Switcher */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <TranslateRoundedIcon fontSize='small' sx={{ opacity: 0.7 }} />
-
-          <ToggleButtonGroup
-            exclusive
-            value={locale}
-            size='small'
+          direction="row"
+          spacing={2}
+          alignItems="center"
+          sx={{
+            flex: 1,
+            justifyContent: "flex-end",
+          }}
+        >
+          {/* NAV LINKS */}
+          <Stack
+            direction="row"
+            spacing={2}
             sx={{
-              "& .MuiToggleButton-root": {
-                textTransform: "none",
-                fontSize: "0.75rem",
-                px: 1.5,
-                py: 0.3,
-                borderRadius: "8px",
-                transition: "0.2s",
-              },
-            }}>
-            <ToggleButton
-              value='en'
-              component={Link}
-              href={`/en${cleanPath}`}
-              sx={{
-                opacity: locale === "en" ? 1 : 0.4,
-                fontWeight: locale === "en" ? 700 : 400,
-              }}>
-              EN
-            </ToggleButton>
+              display: { xs: "none", md: "flex" }, // some no mobile se quiser
+            }}
+          >
+            {navItems.map((item) => (
+              <Button
+                key={item.href}
+                component={MLink}
+                href={item.href}
+                sx={{
+                  color: "text.primary",
+                  fontSize: "0.85rem",
+                  letterSpacing: 0.6,
+                }}
+              >
+                {item.label.toUpperCase()}
+              </Button>
+            ))}
+          </Stack>
 
-            <ToggleButton
-              value='pt'
-              component={Link}
-              href={`/pt${cleanPath}`}
-              sx={{
-                opacity: locale === "pt" ? 1 : 0.4,
-                fontWeight: locale === "pt" ? 700 : 400,
-              }}>
-              PT-BR
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </Box>
+          {/* LANG TOGGLE + THEME */}
+          <Stack direction="row" spacing={1.5} alignItems="center">
+            <IconButton size="small" disableRipple sx={{ cursor: "default" }}>
+              <TranslateIcon fontSize="small" />
+            </IconButton>
+            <ToggleButtonGroup
+              size="small"
+              exclusive
+              value={locale}
+              onChange={handleLocaleChange}
+            >
+              <ToggleButton value="en">EN</ToggleButton>
+              <ToggleButton value="pt">PT-BR</ToggleButton>
+            </ToggleButtonGroup>
 
-        {/* Theme toggle */}
-        <ThemeToggle />
+            <ThemeSwitcher />
+          </Stack>
+        </Stack>
       </Toolbar>
     </AppBar>
   );
