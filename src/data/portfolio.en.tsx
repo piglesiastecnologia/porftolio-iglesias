@@ -27,7 +27,7 @@ export const profile: PortfolioData["profile"] = {
   github: "https://github.com/piglesiastecnologia",
   linkedin: "https://www.linkedin.com/in/pamelaiglesias/",
   photo: "/profile.png",
-  location: "São Paulo, BR · Remote / Relocation-ready",
+  location: "São Paulo, BR",
   headline: "Full-stack Engineer · Pega System Architect",
   highlights: [
     "React/TypeScript",
@@ -68,7 +68,7 @@ export const languagesInfo: PortfolioData["languagesInfo"] = {
     "Portuguese (C2 – Native)",
     "English (C1 – Advanced)",
     "Spanish (B2 – Upper Intermediate)",
-    "French (B1 - Internmediate)",
+    "French (B1 - Intermediate)",
   ],
   availability: [
     "Remote work",

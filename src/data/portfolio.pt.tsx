@@ -39,7 +39,7 @@ export const profile: Profile = {
   github: "https://github.com/piglesiastecnologia",
   linkedin: "https://www.linkedin.com/in/pamelaiglesias/",
   photo: "/profile.png",
-  location: "São Paulo, BR · Remoto / Relocation",
+  location: "São Paulo, BR",
   headline: "Full-stack Engineer · Pega System Architect",
   highlights: [
     "React/TS",
