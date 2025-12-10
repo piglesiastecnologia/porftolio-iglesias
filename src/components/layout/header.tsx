@@ -15,6 +15,7 @@ import TranslateIcon from "@mui/icons-material/Translate";
 import { usePathname, useRouter } from "next/navigation";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import type { Locale } from "@/i18n/config";
+import ReactCountryFlag from "react-country-flag";
 
 type HeaderProps = { locale: Locale };
 
@@ -62,7 +63,6 @@ export function Header({ locale }: HeaderProps) {
           background: "transparent",
           backdropFilter: "blur(20px) saturate(170%)",
           WebkitBackdropFilter: "blur(20px) saturate(170%)",
-          // fundo de vidro diferente por tema
           backgroundImage: isDark
             ? "linear-gradient(to bottom, rgba(15,23,42,0.95), rgba(15,23,42,0.7), rgba(15,23,42,0.15))"
             : "linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(248,250,252,0.8), rgba(248,250,252,0.2))",
@@ -146,25 +146,47 @@ export function Header({ locale }: HeaderProps) {
                 const isDark = theme.palette.mode === "dark";
                 return {
                   "& .MuiToggleButton-root": {
-                    textTransform: "none",
-                    fontSize: "0.7rem",
-                    px: 1.6,
-                    borderRadius: 999,
+                    p: 0.4,
+                    borderRadius: "10%",
+                    width: 34,
+                    height: 34,
                     border: "none",
-                    color: theme.palette.text.primary,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                     backgroundColor: "transparent",
                     "&.Mui-selected": {
                       background: isDark
-                        ? "linear-gradient(135deg, rgba(129,140,248,0.35), rgba(59,130,246,0.55))"
-                        : "linear-gradient(135deg, rgba(191,219,254,0.9), rgba(129,140,248,0.9))",
-                      color: isDark ? "#e5edff" : "#0f172a",
+                        ? "rgba(148,163,184,0.25)"
+                        : "rgba(148,163,184,0.25)",
                     },
                   },
                 };
               }}
             >
-              <ToggleButton value="en">EN</ToggleButton>
-              <ToggleButton value="pt">PT-BR</ToggleButton>
+              <ToggleButton value="en">
+                <ReactCountryFlag
+                  countryCode="US"
+                  svg
+                  style={{
+                    width: "1.4em",
+                    height: "1.4em",
+                    borderRadius: "999px",
+                  }}
+                />
+              </ToggleButton>
+
+              <ToggleButton value="pt">
+                <ReactCountryFlag
+                  countryCode="BR"
+                  svg
+                  style={{
+                    width: "1.4em",
+                    height: "1.4em",
+                    borderRadius: "999px",
+                  }}
+                />
+              </ToggleButton>
             </ToggleButtonGroup>
 
             <ThemeSwitcher />
