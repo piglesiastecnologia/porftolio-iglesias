@@ -10,7 +10,6 @@ import {
   Link as MLink,
   ToggleButtonGroup,
   ToggleButton,
-  Box,
 } from "@mui/material";
 import TranslateIcon from "@mui/icons-material/Translate";
 import { usePathname, useRouter } from "next/navigation";
@@ -54,25 +53,27 @@ export function Header({ locale }: HeaderProps) {
     <AppBar
       position="sticky"
       elevation={0}
-      sx={(theme) => ({
-        top: 0,
-        zIndex: theme.zIndex.appBar,
-        background: "transparent",
-        // 🔹 vidro de verdade
-        backdropFilter: "blur(24px) saturate(170%)",
-        WebkitBackdropFilter: "blur(24px) saturate(170%)",
-        // faixa de vidro com gradiente e transparência
-        backgroundImage:
-          theme.palette.mode === "dark"
-            ? "linear-gradient(to bottom, rgba(15,23,42,0.65), rgba(15,23,42,0.35), rgba(15,23,42,0.08))"
-            : "linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(248,250,252,0.7), rgba(248,250,252,0.12))",
-        // tira bordona marcada
-        borderBottom: "1px solid rgba(148,163,184,0.25)",
-        boxShadow:
-          theme.palette.mode === "dark"
-            ? "0 18px 40px rgba(0,0,0,0.6)"
-            : "0 18px 40px rgba(15,23,42,0.18)",
-      })}
+      sx={(theme) => {
+        const isDark = theme.palette.mode === "dark";
+
+        return {
+          top: 0,
+          zIndex: theme.zIndex.appBar,
+          background: "transparent",
+          backdropFilter: "blur(20px) saturate(170%)",
+          WebkitBackdropFilter: "blur(20px) saturate(170%)",
+          // fundo de vidro diferente por tema
+          backgroundImage: isDark
+            ? "linear-gradient(to bottom, rgba(15,23,42,0.95), rgba(15,23,42,0.7), rgba(15,23,42,0.15))"
+            : "linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(248,250,252,0.8), rgba(248,250,252,0.2))",
+          borderBottom: isDark
+            ? "1px solid rgba(15,23,42,0.9)"
+            : "1px solid rgba(148,163,184,0.35)",
+          boxShadow: isDark
+            ? "0 18px 40px rgba(0,0,0,0.7)"
+            : "0 10px 30px rgba(148,163,184,0.35)",
+        };
+      }}
     >
       <Toolbar
         sx={{
@@ -92,20 +93,18 @@ export function Header({ locale }: HeaderProps) {
           href={`/${locale}`}
           variant="subtitle1"
           fontWeight={600}
-          sx={{
+          sx={(theme) => ({
             textDecoration: "none",
-            color: "rgba(255,255,255,0.96)",
+            color: theme.palette.text.primary,
             letterSpacing: 0.4,
-            textShadow: "0 2px 6px rgba(0,0,0,0.35)",
-            whiteSpace: "nowrap",
-          }}
+          })}
         >
           Pamela Iglesias
         </Typography>
 
-        {/* Nav + controls */}
+        {/* Nav + controles */}
         <Stack direction="row" spacing={2} alignItems="center">
-          {/* Nav links */}
+          {/* Links */}
           <Stack
             direction="row"
             spacing={2}
@@ -116,12 +115,11 @@ export function Header({ locale }: HeaderProps) {
                 key={item.href}
                 component={MLink}
                 href={item.href}
-                sx={{
-                  color: "rgba(255,255,255,0.9)",
+                sx={(theme) => ({
+                  color: theme.palette.text.primary,
                   fontSize: "0.8rem",
                   letterSpacing: 0.6,
-                  textShadow: "0 2px 4px rgba(0,0,0,0.4)",
-                }}
+                })}
               >
                 {item.label.toUpperCase()}
               </Button>
@@ -130,7 +128,12 @@ export function Header({ locale }: HeaderProps) {
 
           {/* Idioma + tema */}
           <Stack direction="row" spacing={1.2} alignItems="center">
-            <IconButton size="small" sx={{ color: "rgba(255,255,255,0.9)" }}>
+            <IconButton
+              size="small"
+              sx={(theme) => ({
+                color: theme.palette.text.primary,
+              })}
+            >
               <TranslateIcon fontSize="small" />
             </IconButton>
 
@@ -139,20 +142,25 @@ export function Header({ locale }: HeaderProps) {
               size="small"
               value={locale}
               onChange={handleLocaleChange}
-              sx={{
-                "& .MuiToggleButton-root": {
-                  color: "rgba(255,255,255,0.85)",
-                  border: "none",
-                  px: 1.6,
-                  textTransform: "none",
-                  fontSize: "0.7rem",
-                  "&.Mui-selected": {
-                    background:
-                      "linear-gradient(135deg, rgba(191,219,254,0.35), rgba(129,140,248,0.55))",
-                    backdropFilter: "blur(12px)",
-                    WebkitBackdropFilter: "blur(12px)",
+              sx={(theme) => {
+                const isDark = theme.palette.mode === "dark";
+                return {
+                  "& .MuiToggleButton-root": {
+                    textTransform: "none",
+                    fontSize: "0.7rem",
+                    px: 1.6,
+                    borderRadius: 999,
+                    border: "none",
+                    color: theme.palette.text.primary,
+                    backgroundColor: "transparent",
+                    "&.Mui-selected": {
+                      background: isDark
+                        ? "linear-gradient(135deg, rgba(129,140,248,0.35), rgba(59,130,246,0.55))"
+                        : "linear-gradient(135deg, rgba(191,219,254,0.9), rgba(129,140,248,0.9))",
+                      color: isDark ? "#e5edff" : "#0f172a",
+                    },
                   },
-                },
+                };
               }}
             >
               <ToggleButton value="en">EN</ToggleButton>
