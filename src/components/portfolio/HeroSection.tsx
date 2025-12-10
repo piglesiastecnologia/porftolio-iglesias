@@ -29,29 +29,37 @@ export function HeroSection({ profile, locale }: HeroSectionProps) {
           overline: "Portfolio",
           relocationChip: "Open to relocation · Remote",
           email: "Email",
+          cv: "Download CV",
         }
       : {
           overline: "Portfólio",
           relocationChip: "Aberta a relocation · Remoto",
           email: "E-mail",
+          cv: "Baixar CV",
         };
+
+  const cvHref =
+    locale === "en"
+      ? "/cv/pamela-iglesias-cv-en.pdf"
+      : "/cv/pamela-iglesias-cv-ptbr.pdf";
 
   return (
     <Box
       sx={{
         display: "flex",
+        flexDirection: { xs: "column", md: "row" },              // 👈 mobile first
         gap: { xs: 3, md: 4 },
-        alignItems: { xs: "flex-start", md: "center" },
+        alignItems: { xs: "center", md: "center" },
         pt: { xs: 4, md: 6 },
         pb: { xs: 2, md: 3 },
         flexWrap: "wrap",
       }}
     >
-      {/* Foto redonda */}
+      {/* Foto */}
       <Box
         sx={{
-          width: 200,
-          height: 200,
+          width: { xs: 160, md: 200 },                             // 👈 menor no mobile
+          height: { xs: 160, md: 200 },
           position: "relative",
           borderRadius: "50%",
           boxShadow: (t) =>
@@ -73,7 +81,13 @@ export function HeroSection({ profile, locale }: HeroSectionProps) {
         />
       </Box>
 
-      <Box sx={{ flex: 1, minWidth: 0 }}>
+      <Box
+        sx={{
+          flex: 1,
+          minWidth: 0,
+          textAlign: { xs: "center", md: "left" },               // 👈 centraliza no mobile
+        }}
+      >
         <Typography
           variant="overline"
           sx={{ letterSpacing: 3, textTransform: "uppercase" }}
@@ -82,22 +96,43 @@ export function HeroSection({ profile, locale }: HeroSectionProps) {
           {labels.overline}
         </Typography>
 
-        <Typography variant="h3" fontWeight={800} sx={{ mt: 0.5, mb: 0.5 }}>
+        <Typography
+          variant="h3"
+          fontWeight={800}
+          sx={{
+            mt: 0.5,
+            mb: 0.5,
+            fontSize: { xs: "2rem", md: "2.8rem" },               // 👈 reduzido no celular
+            lineHeight: { xs: 1.2, md: 1.15 },
+          }}
+        >
           {profile.name}
         </Typography>
 
-        <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 1.5 }}>
+        <Typography
+          variant="subtitle1"
+          color="text.secondary"
+          sx={{
+            mb: 1.5,
+            fontSize: { xs: "0.95rem", md: "1rem" },
+          }}
+        >
           {profile.headline}
         </Typography>
 
         <Stack
-          direction="row"
+          direction={{ xs: "column", md: "row" }}
           spacing={1.5}
-          alignItems="center"
+          alignItems={{ xs: "center", md: "center" }}
+          justifyContent={{ xs: "center", md: "flex-start" }}
           mb={2}
-          flexWrap="wrap"
         >
-          <Stack direction="row" spacing={1} alignItems="center">
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            sx={{ justifyContent: { xs: "center", md: "flex-start" } }}
+          >
             <PlaceIcon fontSize="small" />
             <Typography variant="body2">{profile.location}</Typography>
           </Stack>
@@ -109,22 +144,27 @@ export function HeroSection({ profile, locale }: HeroSectionProps) {
           />
         </Stack>
 
-        {/* Se quiser voltar com os highlights, já tá pronto pra i18n também */}
-        {/* <Stack direction="row" spacing={1} mb={2} flexWrap="wrap" useFlexGap>
-          {profile.highlights.map((h) => (
-            <Chip
-              key={h}
-              label={h}
-              size="small"
-              variant="outlined"
-              sx={{ borderRadius: 999, borderStyle: "dashed" }}
-            />
-          ))}
-        </Stack> */}
-
-        <Stack direction="row" spacing={2} mt={1} flexWrap="wrap" useFlexGap>
+        <Stack
+          direction="row"
+          spacing={1.5}
+          mt={1}
+          flexWrap="wrap"
+          useFlexGap
+          justifyContent={{ xs: "center", md: "flex-start" }}    // 👈 centraliza botões no mobile
+        >
+          {/* CV BUTTON */}
           <Button
             variant="contained"
+            size="small"
+            component={MLink}
+            href={cvHref}
+            download
+          >
+            {labels.cv}
+          </Button>
+
+          <Button
+            variant="outlined"
             size="small"
             startIcon={<LinkedInIcon />}
             component={MLink}

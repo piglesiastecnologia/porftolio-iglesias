@@ -58,10 +58,10 @@ export function Header({ locale }: HeaderProps) {
       }}>
       <Toolbar
         sx={{
-          maxWidth: "lg",
-          mx: "auto",
-          width: "100%",
-          gap: 2,
+          display: "flex",
+          justifyContent: "space-between",
+          px: { xs: 1.5, md: 2 },
+          minHeight: { xs: 56, md: 64 },
         }}>
         {/* Logo / Nome */}
         <Box
@@ -95,7 +95,6 @@ export function Header({ locale }: HeaderProps) {
           ))}
         </Stack>
 
-        {/* Theme toggle */}
         {/* Language Switcher */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <TranslateRoundedIcon fontSize='small' sx={{ opacity: 0.7 }} />
@@ -137,6 +136,8 @@ export function Header({ locale }: HeaderProps) {
             </ToggleButton>
           </ToggleButtonGroup>
         </Box>
+
+        {/* Theme toggle */}
         <ThemeToggle />
       </Toolbar>
     </AppBar>

@@ -39,14 +39,16 @@ export default async function HomePage({ params }: PageProps) {
           py: { xs: 4, md: 6 },
           display: "flex",
           flexDirection: "column",
-          gap: { xs: 4, md: 6 },
+          gap: { xs: 5, md: 6 },
         }}>
         <HeroSection profile={profile} locale={locale} />
         <AboutSection
           title={about.title}
           paragraphs={about.paragraphs}
           highlights={profile.highlights}
+          locale={locale}
         />
+
         <StackListSection items={techStack} locale={locale} />
         <ProjectsSection projects={projects} locale={locale} />
         <LanguagesSection
