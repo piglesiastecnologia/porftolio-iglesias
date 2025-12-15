@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 // import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR">
       <body>
+        <Analytics />
         <SpeedInsights />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
